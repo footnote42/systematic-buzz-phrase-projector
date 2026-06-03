@@ -109,19 +109,17 @@ Specs live under `specs/`. The workflow order is:
 Run `/speckit-agent-context-update` after each planning phase to refresh the section below.
 
 <!-- SPECKIT START -->
-For additional context about technologies to be used, project structure,
-shell commands, and other important information, read the current plan
-at `specs/002-display-themes/plan.md`.
+Specs 001 (core app) and 002 (display themes) are complete and merged to main.
+No active spec. Run `/speckit-specify <feature description>` to start the next one.
 
-Key planning decisions:
+Completed specs:
+- `specs/001-core-app/` — data layer, state hooks, word matrices, manual input, favourites
+- `specs/002-display-themes/` — Split-Flap, Slot Machine, and Dot-Matrix animated skins
+
+Stable architectural decisions carried forward:
 - `'use client'` boundary at `src/components/BuzzPhraseApp.tsx`; `page.tsx` is a Server Component
-- React Compiler (`babel-plugin-react-compiler`) is active — no manual `useMemo`/`useCallback`
-- `DisplayProps` interface in `src/types/index.ts` is the shared contract for all three skin components
-- Slot Machine and Split-Flap receive `columnWords` prop (full active matrix columns) from `BuzzPhraseApp`
-- `useReducedMotion` hook (lazy `useState` SSR-safe) — all skins skip animation and call `onAnimationComplete` immediately when true
-- `useAudio` upgraded from stub to full Web Audio synthesis; single `AudioContext` in `useRef`
-- VT323 font loaded via `next/font/google` in `layout.tsx`, exposed as `--font-vt323` CSS variable
-- `StaticDisplay` is deleted; `SKIN_MAP[theme]` in `BuzzPhraseApp` dispatches to the active skin
-- New localStorage key: `sbpp-dotmatrix-colour` (`'green' | 'amber'`, default `'green'`)
-- Animation components are exempt from unit tests per constitution §II; `useReducedMotion` gets one SSR test
+- React Compiler active — no manual `useMemo`/`useCallback`
+- `DisplayProps` interface in `src/types/index.ts` is the shared contract for all skin components
+- `SKIN_MAP[theme]` in `BuzzPhraseApp` dispatches to the active skin component
+- All localStorage keys: `sbpp-favourites`, `sbpp-mode`, `sbpp-theme`, `sbpp-dotmatrix-colour`
 <!-- SPECKIT END -->
