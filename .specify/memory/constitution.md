@@ -15,6 +15,12 @@ Templates reviewed:
   - .specify/templates/plan-template.md        ✅ Constitution Check gate present; will be filled per feature
   - .specify/templates/tasks-template.md       ✅ no changes required
 Deferred TODOs: none
+
+---
+
+Version change: 1.0.0 → 1.0.1 (PATCH — 2026-06-03)
+Spelling normalisation: "favorites" → "favourites" in §III (two occurrences).
+British English established as canonical convention per spec clarification 001-core-app.
 -->
 
 # Systematic Buzz Phrase Projector Constitution
@@ -67,7 +73,7 @@ is wrong, every generated phrase is wrong. Everything else is presentation.
 
 All three skins (Split-Flap, Slot Machine, Dot-Matrix) MUST present identical information
 architecture: mode selector, theme selector, output display, generate button, manual input,
-and favorites access. Switching skin MUST NOT move or remove any of these controls.
+and favourites access. Switching skin MUST NOT move or remove any of these controls.
 
 Animation MUST be interruptible: triggering generate while an animation is running MUST cancel
 the in-flight animation and start a new one immediately. The UI MUST NOT lock the user out
@@ -79,7 +85,7 @@ submit on `Enter`. No feature may be mouse-only.
 Skin-switching MUST be instant — the current phrase renders immediately in the new skin with no
 re-animation. Only a fresh generate or manual submit triggers animation.
 
-LocalStorage state (favorites, mode, theme) MUST be restored on page load with no visible flash
+LocalStorage state (favourites, mode, theme) MUST be restored on page load with no visible flash
 of default state.
 
 **Why**: The three skins are the primary novelty of the product. Users will switch between them
@@ -121,4 +127,4 @@ which principles were checked for each feature. A plan MAY NOT proceed to implem
 principle is in violation without explicit justification recorded in the plan's
 Complexity Tracking table.
 
-**Version**: 1.0.0 | **Ratified**: 2026-06-02 | **Last Amended**: 2026-06-02
+**Version**: 1.0.1 | **Ratified**: 2026-06-02 | **Last Amended**: 2026-06-03

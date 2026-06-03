@@ -53,14 +53,14 @@ Because every C1 word grammatically precedes any C2 word, which in turn modifies
 | Index | Column 1 | Column 2 | Column 3 |
 |-------|----------|----------|----------|
 | 0 | hyper-scale | algorithmic | paradigm |
-| 1 | decentralized | friction-free | ecosystem |
+| 1 | decentralised | friction-free | ecosystem |
 | 2 | generative | multi-channel | touchpoint |
 | 3 | cross-functional | cloud-native | synergy |
 | 4 | agile | composable | bandwidth |
-| 5 | sustainable | telemetry | optimization |
+| 5 | sustainable | telemetry | optimisation |
 | 6 | cognitive | omni-directional | pipeline |
 | 7 | proactive | zero-trust | alignment |
-| 8 | leveraged | tokenized | standard |
+| 8 | leveraged | tokenised | standard |
 | 9 | deep-dive | asynchronous | vector |
 
 ### 3.3 Chaos Matrix (derived)
@@ -88,7 +88,7 @@ CHAOS_MATRIX.column1 = [...ORIGINAL_MATRIX.column1, ...MODERN_MATRIX.column1]
 ```
 src/
   app/
-    page.tsx            # Root: mode selector + display area + favorites drawer
+    page.tsx            # Root: mode selector + display area + favourites drawer
     layout.tsx          # Minimal shell (no portfolio nav)
     globals.css         # Tailwind base + custom animation keyframes
   components/
@@ -96,14 +96,14 @@ src/
     ThemeSelector.tsx   # "Split-Flap / Slot Machine / Dot-Matrix" toggle
     ManualInput.tsx     # 3-digit numeric input with validation
     GenerateButton.tsx  # Primary CTA — triggers random generation
-    FavoritesSidebar.tsx # Saved phrases drawer
+    FavouritesSidebar.tsx # Saved phrases drawer
     display/
       SplitFlapDisplay.tsx   # CSS flip animation + Web Audio
       SlotMachineDisplay.tsx # translateY scroll animation
       DotMatrixDisplay.tsx   # Typewriter character reveal
   hooks/
     useBuzzword.ts      # Core state: mode, indices, phrase, isAnimating
-    useLocalFavorites.ts # localStorage read/write for saved phrases
+    useLocalFavourites.ts # localStorage read/write for saved phrases
     useAudio.ts         # Web Audio API noise synthesis (Split-Flap only)
   constants/
     buzzwords.ts        # ORIGINAL_MATRIX, MODERN_MATRIX, CHAOS_MATRIX
@@ -221,15 +221,15 @@ Retro terminal printout aesthetic.
 
 ---
 
-### 5.4 Favorites & Local Storage
+### 5.4 Favourites & Local Storage
 
 **Saving a phrase:**
 - A star/bookmark icon appears next to the generated phrase.
-- Clicking it toggles the phrase in/out of a `localFavorites` array.
+- Clicking it toggles the phrase in/out of a `localFavourites` array.
 - Saved item shape: `{ id: string, words: [string, string, string], mode: Mode, savedAt: number }`.
 - State syncs to `window.localStorage` on every toggle.
 
-**Favorites sidebar/drawer:**
+**Favourites sidebar/drawer:**
 - Triggered by a persistent "Saved" button or drawer handle.
 - Lists saved phrases in reverse chronological order.
 - Each entry shows the full phrase text, the mode badge, and a remove button.
@@ -237,7 +237,7 @@ Retro terminal printout aesthetic.
 - Maximum 50 saved phrases (oldest removed when limit is exceeded).
 
 **localStorage keys:**
-- `sbpp-favorites` — JSON array of saved phrases
+- `sbpp-favourites` — JSON array of saved phrases
 - `sbpp-mode` — last selected mode
 - `sbpp-theme` — last selected theme
 
@@ -281,12 +281,12 @@ Retro terminal printout aesthetic.
 
 | Phase | Description |
 |-------|-------------|
-| 1 | Data & state scaffold: `buzzwords.ts`, `useBuzzword.ts`, `useLocalFavorites.ts` |
+| 1 | Data & state scaffold: `buzzwords.ts`, `useBuzzword.ts`, `useLocalFavourites.ts` |
 | 2 | Base UI: mode selector, theme selector, manual input, generate button, plain text output |
 | 3 | Slot Machine skin (simplest animation — validates the translate approach) |
 | 4 | Split-Flap skin + Web Audio synthesis |
 | 5 | Dot-Matrix typewriter skin |
-| 6 | Favorites sidebar with localStorage persistence |
+| 6 | Favourites sidebar with localStorage persistence |
 | 7 | Theme/mode persistence, mute toggle, polish pass |
 | 8 | Portfolio `WorkshopCard` link in `portfolio-site` |
 

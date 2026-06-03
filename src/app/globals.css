@@ -5,7 +5,20 @@
   --color-foreground: #171717;
 }
 
-/* spec 002 will add animation keyframes here */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes flipTop {
+  from { transform: rotateX(0deg); }
+  to   { transform: rotateX(-90deg); }
+}
+
+@keyframes flipBottom {
+  from { transform: rotateX(90deg); }
+  to   { transform: rotateX(0deg); }
+}
 
 body {
   background: var(--color-background);

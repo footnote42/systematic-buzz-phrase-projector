@@ -1,5 +1,6 @@
 export type Mode = 'original' | 'modern' | 'chaos'
 export type Theme = 'splitflap' | 'slotmachine' | 'dotmatrix'
+export type ColourVariant = 'green' | 'amber'
 
 export interface WordMatrix {
   readonly column1: readonly string[]

@@ -10,6 +10,12 @@ A multi-mode digital homage to Philip Broughton's 1968 *Systematic Buzz Phrase P
 
 Full PRD at `Docs/PRD.md`.
 
+## Language
+
+British English is the canonical spelling convention for all prose, UI copy, code identifiers, and documentation in this project. Use "favourites", "colour", "organise", "behaviour", etc. throughout.
+
+Exceptions: Tailwind CSS utility class names (e.g., `items-center`) are framework API terms and are not subject to this convention.
+
 ## Commands
 
 ```bash
@@ -36,21 +42,21 @@ Next.js 16 App Router · React 19 · TypeScript · Tailwind CSS 4. No backend in
 ```
 src/
   app/
-    page.tsx              # Root page — mode selector, display area, favorites trigger
+    page.tsx              # Root page — mode selector, display area, favourites trigger
     layout.tsx            # Minimal shell (no portfolio nav)
   components/
     ModeSelector.tsx      # "Original 1968 / Modern 2026 / Chaos" toggle
     ThemeSelector.tsx     # "Split-Flap / Slot Machine / Dot-Matrix" toggle
     ManualInput.tsx       # 3-digit code entry with per-mode validation
     GenerateButton.tsx    # Randomiser CTA
-    FavoritesSidebar.tsx  # Saved-phrases drawer (localStorage)
+    FavouritesSidebar.tsx  # Saved-phrases drawer (localStorage)
     display/
       SplitFlapDisplay.tsx    # CSS backface-visibility flip + Web Audio
       SlotMachineDisplay.tsx  # translateY scroll + bounce easing
       DotMatrixDisplay.tsx    # setTimeout character typewriter
   hooks/
     useBuzzword.ts        # Core state: mode, theme, indices, phrase, isAnimating
-    useLocalFavorites.ts  # localStorage read/write (key: sbpp-favorites)
+    useLocalFavourites.ts  # localStorage read/write (key: sbpp-favourites)
     useAudio.ts           # Web Audio noise burst for Split-Flap clicks
   constants/
     buzzwords.ts          # ORIGINAL_MATRIX, MODERN_MATRIX, CHAOS_MATRIX
@@ -76,7 +82,7 @@ interface BuzzPhrase {
 
 | Key | Contents |
 |-----|----------|
-| `sbpp-favorites` | JSON array of saved `BuzzPhrase` objects |
+| `sbpp-favourites` | JSON array of saved `BuzzPhrase` objects |
 | `sbpp-mode` | Last selected `Mode` |
 | `sbpp-theme` | Last selected `Theme` |
 
@@ -105,4 +111,17 @@ Run `/speckit-agent-context-update` after each planning phase to refresh the sec
 <!-- SPECKIT START -->
 For additional context about technologies to be used, project structure,
 shell commands, and other important information, read the current plan
+at `specs/002-display-themes/plan.md`.
+
+Key planning decisions:
+- `'use client'` boundary at `src/components/BuzzPhraseApp.tsx`; `page.tsx` is a Server Component
+- React Compiler (`babel-plugin-react-compiler`) is active — no manual `useMemo`/`useCallback`
+- `DisplayProps` interface in `src/types/index.ts` is the shared contract for all three skin components
+- Slot Machine and Split-Flap receive `columnWords` prop (full active matrix columns) from `BuzzPhraseApp`
+- `useReducedMotion` hook (lazy `useState` SSR-safe) — all skins skip animation and call `onAnimationComplete` immediately when true
+- `useAudio` upgraded from stub to full Web Audio synthesis; single `AudioContext` in `useRef`
+- VT323 font loaded via `next/font/google` in `layout.tsx`, exposed as `--font-vt323` CSS variable
+- `StaticDisplay` is deleted; `SKIN_MAP[theme]` in `BuzzPhraseApp` dispatches to the active skin
+- New localStorage key: `sbpp-dotmatrix-colour` (`'green' | 'amber'`, default `'green'`)
+- Animation components are exempt from unit tests per constitution §II; `useReducedMotion` gets one SSR test
 <!-- SPECKIT END -->
