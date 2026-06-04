@@ -2,6 +2,7 @@ interface ManualInputProps {
   onSubmit: (value: string) => void
   validationError: string | null
   disabled: boolean
+  hint: string
 }
 
 const ALLOWED_KEYS = new Set([
@@ -9,7 +10,7 @@ const ALLOWED_KEYS = new Set([
   'Home', 'End',
 ])
 
-export default function ManualInput({ onSubmit, validationError, disabled }: ManualInputProps) {
+export default function ManualInput({ onSubmit, validationError, disabled, hint }: ManualInputProps) {
   function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key === 'Enter') {
       onSubmit(e.currentTarget.value)
@@ -25,6 +26,7 @@ export default function ManualInput({ onSubmit, validationError, disabled }: Man
       <label htmlFor="manual-code" className="text-sm font-medium">
         Enter 3-digit code
       </label>
+      <p className="text-xs text-gray-500 max-w-[7rem]">{hint}</p>
       <input
         id="manual-code"
         type="text"

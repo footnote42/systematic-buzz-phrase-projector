@@ -1,7 +1,7 @@
 # Product Requirements Document
 # Systematic Buzz Phrase Projector — V2.0
 
-**Status:** Draft for SpecKit  
+**Status:** Active  
 **Date:** 2026-06-02  
 **Owner:** Wayne Ellis  
 
@@ -81,7 +81,9 @@ CHAOS_MATRIX.column1 = [...ORIGINAL_MATRIX.column1, ...MODERN_MATRIX.column1]
 - **Repo:** `github.com/footnote42/systematic-buzz-phrase-projector`
 - **Framework:** Next.js 16 App Router, TypeScript, Tailwind CSS 4
 - **Deployment:** Vercel (standalone project, separate from portfolio)
-- **Portfolio link:** `portfolio-site/app/workshop/page.tsx` gets a `WorkshopCard` component linking to the Vercel URL
+- **Vercel project name:** `systematic-buzz-phrase-projector`
+- **Custom domain:** `buzz.waynetellis.com` (CNAME → Vercel, assigned in project settings)
+- **Portfolio link:** `portfolio-site/app/workshop/page.tsx` gets a `WorkshopCard` component linking to `https://buzz.waynetellis.com`
 
 ### 4.2 File Structure
 
@@ -272,23 +274,36 @@ Retro terminal printout aesthetic.
 | Real-time headline → phrase feed | Post-V1 |
 | Full 6-digit chaos manual input | Post-V1 |
 | User accounts / cross-device sync | Post-V1 |
-| Share-to-social buttons | Post-V1 |
+| Share-to-social buttons (platform sharing APIs) | Post-V1 |
 | Framer Motion (use CSS transitions only) | Excluded — CSS-only keeps bundle minimal |
+
+### V1.x Candidates (delight layer — spec 005)
+
+Lightweight enhancements that extend V1 without requiring accounts or backend:
+
+| Feature | Mechanism |
+|---------|-----------|
+| Shareable URL: `?code=257&mode=original` pre-loads a specific phrase | Query-param read on mount in `useBuzzword`; no server involvement |
+| Keyboard shortcut: Space bar triggers generate | `keydown` listener; disabled during animation |
+| Easter egg codes: specific 3-digit entries surface a special phrase | Hard-coded lookup table in `buzzwords.ts` |
+| Confetti burst on first save | `canvas-confetti` (~1.5 kB gzip) triggered once per session |
+| Hall of Infamy tab: 3–5 pre-loaded classic Broughton phrases | Static array surfaced inside `FavouritesSidebar` |
+| Generation counter: "N phrases generated this session" | `useState` counter in `useBuzzword` |
 
 ---
 
 ## 8. Implementation Phases
 
-| Phase | Description |
-|-------|-------------|
-| 1 | Data & state scaffold: `buzzwords.ts`, `useBuzzword.ts`, `useLocalFavourites.ts` |
-| 2 | Base UI: mode selector, theme selector, manual input, generate button, plain text output |
-| 3 | Slot Machine skin (simplest animation — validates the translate approach) |
-| 4 | Split-Flap skin + Web Audio synthesis |
-| 5 | Dot-Matrix typewriter skin |
-| 6 | Favourites sidebar with localStorage persistence |
-| 7 | Theme/mode persistence, mute toggle, polish pass |
-| 8 | Portfolio `WorkshopCard` link in `portfolio-site` |
+| Phase | Spec | Description | Status |
+|-------|------|-------------|--------|
+| 1 | 001 | Data & state scaffold: `buzzwords.ts`, `useBuzzword.ts`, `useLocalFavourites.ts` | Complete |
+| 2 | 001 | Base UI: mode selector, theme selector, manual input, generate button, favourites sidebar | Complete |
+| 3 | 002 | Slot Machine skin | Complete |
+| 4 | 002 | Split-Flap skin + Web Audio synthesis | Complete |
+| 5 | 002 | Dot-Matrix typewriter skin | Complete |
+| 6 | 003 | Editorial layer: Broughton copy, author's note, page design & typography polish | Pending |
+| 7 | 004 | Vercel deployment, `buzz.waynetellis.com` domain, portfolio `WorkshopCard` | Pending |
+| 8 | 005 | Delight layer: shareable URLs, keyboard shortcuts, Easter eggs, confetti, Hall of Infamy | Pending |
 
 ---
 
@@ -301,3 +316,57 @@ Retro terminal printout aesthetic.
 - Saving a phrase and reloading the page preserves it in the sidebar
 - `npm run build` exits with zero TypeScript errors
 - Switching modes mid-session clears the display and disables the generate button for 0ms (no orphaned state)
+
+---
+
+## 10. Editorial Layer
+
+### 10.1 Purpose
+
+The app needs prose context to land for a first-time visitor. Without it, the controls are
+legible but the *why* is missing. This section specifies the required editorial copy and
+the structural requirements for how it is presented.
+
+### 10.2 Required Content Blocks
+
+#### Origin Story
+
+A short (3–4 sentence) explanation of Philip Broughton and the 1968 *Time* magazine
+publication. Must include the canonical Broughton quote:
+
+> *"No-one will have the remotest idea of what you're talking about. But the important
+> thing is that they're not going to admit it."* — Philip Broughton, 1968
+
+Content should be factual, lightly irreverent, and never longer than a paragraph.
+
+#### Author's Twist
+
+1–2 sentences from Wayne Ellis explaining the Modern (2026) and Chaos extensions — the
+decision to update the lexicon with AI/agile jargon and what the combined Chaos matrix
+represents. First-person voice is appropriate here.
+
+#### How It Works
+
+Optional micro-copy (1–2 lines max) explaining the three-digit code mechanic — visible
+near the manual input controls rather than in a separate section.
+
+### 10.3 Layout Requirements
+
+- Editorial content is positioned **below the interactive controls**, not above. The
+  primary action (generate a phrase) must not be pushed below the fold on a 768px
+  viewport.
+- Copy uses the base body font, not any of the skin-specific display fonts.
+- The origin story and author's twist are visually grouped (e.g. a bordered callout or
+  subtle background tint) to distinguish them from the UI chrome.
+- On mobile (375px), the editorial block collapses gracefully — no horizontal overflow,
+  no clipped text.
+
+### 10.4 Typography & Visual Hierarchy
+
+- A display/headline font (distinct from the three retro skin fonts) is used for the
+  page title and section headings. Font choice to be confirmed during spec 003 design
+  exploration.
+- The page has at least three clear visual layers: (1) interactive controls + display,
+  (2) editorial context, (3) footer/attribution.
+- Colour palette for the editorial layer is neutral (not skin-themed) so it reads
+  correctly regardless of which display skin is active.

@@ -12,6 +12,7 @@ import SplitFlapDisplay from '@/components/display/SplitFlapDisplay'
 import SlotMachineDisplay from '@/components/display/SlotMachineDisplay'
 import DotMatrixDisplay from '@/components/display/DotMatrixDisplay'
 import FavouritesSidebar from '@/components/FavouritesSidebar'
+import EditorialSection from '@/components/EditorialSection'
 import type { Theme, DisplayProps, Mode } from '@/types'
 import type React from 'react'
 
@@ -23,6 +24,12 @@ const SKIN_MAP: Record<Theme, React.ComponentType<SkinProps>> = {
   splitflap: SplitFlapDisplay as React.ComponentType<SkinProps>,
   slotmachine: SlotMachineDisplay as React.ComponentType<SkinProps>,
   dotmatrix: DotMatrixDisplay as React.ComponentType<SkinProps>,
+}
+
+const MANUAL_HINT: Record<Mode, string> = {
+  original: 'Each digit (0–9) picks one word per column.',
+  modern: 'Each digit (0–9) picks one word per column.',
+  chaos: 'Each digit (0–9) picks from both matrices. Random covers 0–19.',
 }
 
 function getColumnWords(mode: Mode): ColumnWords {
@@ -54,70 +61,83 @@ export default function BuzzPhraseApp() {
   const columnWords = getColumnWords(mode)
 
   return (
-    <main className="flex flex-col flex-1 items-center justify-center p-8 gap-8 max-w-2xl mx-auto w-full">
-      <header className="w-full flex items-center justify-between">
-        <h1 className="text-xl font-bold tracking-tight">Systematic Buzz Phrase Projector</h1>
-        <button
-          type="button"
-          onClick={toggleMute}
-          aria-label={isMuted ? 'Unmute sound' : 'Mute sound'}
-          className="text-sm text-gray-500 hover:text-black transition-colors"
-        >
-          {isMuted ? '🔇' : '🔊'}
-        </button>
-      </header>
+    <div className="flex flex-col min-h-screen">
+      <main className="flex flex-col flex-1 items-center justify-center p-8 gap-8 max-w-2xl mx-auto w-full">
+        <div className="text-center w-full flex flex-col items-center gap-2">
+          <h1 className="text-3xl md:text-4xl font-semibold font-[family-name:var(--font-space-grotesk)] tracking-tight">
+            Systematic Buzz Phrase Projector
+          </h1>
+          <p className="text-sm text-gray-500 max-w-md">
+            {"A digital homage to Philip Broughton's 1968 management-jargon matrix."}
+          </p>
+        </div>
 
-      <ModeSelector mode={mode} onModeChange={setMode} />
-      <ThemeSelector theme={theme} onThemeChange={setTheme} />
+        <ModeSelector mode={mode} onModeChange={setMode} />
+        
+        <div className="flex items-center gap-4">
+          <ThemeSelector theme={theme} onThemeChange={setTheme} />
+          <button
+            type="button"
+            onClick={toggleMute}
+            aria-label={isMuted ? 'Unmute sound' : 'Mute sound'}
+            className="text-sm text-gray-500 hover:text-black transition-colors"
+          >
+            {isMuted ? '🔇' : '🔊'}
+          </button>
+        </div>
 
-      <section aria-label="Phrase display" className="min-h-16 flex items-center justify-center">
-        <ActiveSkin
-          words={current?.words ?? ['', '', '']}
-          isAnimating={isAnimating}
-          onAnimationComplete={handleAnimationComplete}
-          columnWords={columnWords}
+        <section aria-label="Phrase display" className="min-h-16 flex items-center justify-center">
+          <ActiveSkin
+            words={current?.words ?? ['', '', '']}
+            isAnimating={isAnimating}
+            onAnimationComplete={handleAnimationComplete}
+            columnWords={columnWords}
+          />
+        </section>
+
+        <div className="flex flex-col items-center gap-4">
+          <GenerateButton onGenerate={generate} disabled={isAnimating} />
+          <ManualInput
+            onSubmit={submitCode}
+            validationError={validationError}
+            disabled={isAnimating}
+            hint={MANUAL_HINT[mode]}
+          />
+        </div>
+
+        <div className="flex items-center gap-4">
+          <button
+            type="button"
+            onClick={() => current && toggleFavourite(current)}
+            disabled={!current}
+            aria-label={isFavd ? 'Remove from favourites' : 'Save to favourites'}
+            aria-pressed={isFavd}
+            className="text-2xl disabled:opacity-30 transition-opacity"
+          >
+            {isFavd ? '★' : '☆'}
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setSidebarOpen(true)}
+            className="text-sm font-medium hover:underline"
+          >
+            Saved ★ {favourites.length}
+          </button>
+        </div>
+
+        <FavouritesSidebar
+          phrases={favourites}
+          onRemove={(id) => {
+            const phrase = favourites.find((p) => p.id === id)
+            if (phrase) toggleFavourite(phrase)
+          }}
+          isOpen={sidebarOpen}
+          onClose={() => setSidebarOpen(false)}
         />
-      </section>
+      </main>
 
-      <div className="flex flex-col items-center gap-4">
-        <GenerateButton onGenerate={generate} disabled={isAnimating} />
-        <ManualInput
-          onSubmit={submitCode}
-          validationError={validationError}
-          disabled={isAnimating}
-        />
-      </div>
-
-      <div className="flex items-center gap-4">
-        <button
-          type="button"
-          onClick={() => current && toggleFavourite(current)}
-          disabled={!current}
-          aria-label={isFavd ? 'Remove from favourites' : 'Save to favourites'}
-          aria-pressed={isFavd}
-          className="text-2xl disabled:opacity-30 transition-opacity"
-        >
-          {isFavd ? '★' : '☆'}
-        </button>
-
-        <button
-          type="button"
-          onClick={() => setSidebarOpen(true)}
-          className="text-sm font-medium hover:underline"
-        >
-          Saved ★ {favourites.length}
-        </button>
-      </div>
-
-      <FavouritesSidebar
-        phrases={favourites}
-        onRemove={(id) => {
-          const phrase = favourites.find((p) => p.id === id)
-          if (phrase) toggleFavourite(phrase)
-        }}
-        isOpen={sidebarOpen}
-        onClose={() => setSidebarOpen(false)}
-      />
-    </main>
+      <EditorialSection />
+    </div>
   )
 }

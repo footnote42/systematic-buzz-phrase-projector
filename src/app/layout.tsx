@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { VT323 } from 'next/font/google'
+import { VT323, Space_Grotesk } from 'next/font/google'
 import './globals.css'
 
 const vt323 = VT323({
@@ -7,6 +7,13 @@ const vt323 = VT323({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-vt323',
+})
+
+const spaceGrotesk = Space_Grotesk({
+  weight: ['400', '600'],
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-space-grotesk',
 })
 
 export const metadata: Metadata = {
@@ -20,7 +27,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`h-full ${vt323.variable}`}>
+    <html lang="en" className={`h-full ${vt323.variable} ${spaceGrotesk.variable}`}>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   )
