@@ -109,7 +109,10 @@ Specs live under `specs/`. The workflow order is:
 Run `/speckit-agent-context-update` after each planning phase to refresh the section below.
 
 <!-- SPECKIT START -->
-Active spec: None
+Active spec: `specs/004-vercel-deploy/` — Vercel deployment + buzz.waynetellis.com + portfolio WorkshopCard
+Branch: `004-vercel-deploy`
+Plan: `specs/004-vercel-deploy/plan.md`
+Next step: `/speckit-tasks`
 
 Completed specs:
 - `specs/001-core-app/` — data layer, state hooks, word matrices, manual input, favourites
@@ -129,4 +132,10 @@ Spec 003 decisions:
 - New component: `src/components/EditorialSection.tsx` (static prose, no props)
 - `ManualInput` gains a `hint: string` prop; hint is derived in `BuzzPhraseApp` via `MANUAL_HINT[mode]`
 - Editorial palette: `bg-gray-50` / `text-gray-900` — skin-neutral, WCAG AA compliant
+
+Spec 004 decisions:
+- Deployment target: Vercel (free tier), connected to GitHub repo, auto-deploy on push to `main`
+- Custom domain: `buzz.waynetellis.com` via CNAME → `cname.vercel-dns.com`; TLS auto-provisioned
+- No environment variables needed — app is fully client-side
+- WorkshopCard: tracked in this spec's tasks.md; implemented as a separate PR in the portfolio repo
 <!-- SPECKIT END -->

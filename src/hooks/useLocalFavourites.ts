@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import type { BuzzPhrase } from '@/types'
 import {
   addToFavourites,
@@ -40,8 +40,12 @@ function loadFavourites(): BuzzPhrase[] {
 }
 
 export function useLocalFavourites() {
-  const [favourites, setFavourites] = useState<BuzzPhrase[]>(loadFavourites)
+  const [favourites, setFavourites] = useState<BuzzPhrase[]>([])
   const [sidebarOpen, setSidebarOpen] = useState(false)
+
+  useEffect(() => {
+    setFavourites(loadFavourites())
+  }, [])
 
   function toggleFavourite(phrase: BuzzPhrase) {
     setFavourites((prev) => {

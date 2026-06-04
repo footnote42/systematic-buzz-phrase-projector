@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import type { Mode, Theme, BuzzPhrase } from '@/types'
 import { ORIGINAL_MATRIX, MODERN_MATRIX, CHAOS_MATRIX } from '@/constants/buzzwords'
 import { randomIndices, resolvePhrase, validateCode } from '@/utils/phraseResolver'
@@ -46,11 +46,16 @@ function getMatrix(mode: Mode) {
 }
 
 export function useBuzzword() {
-  const [mode, setModeState] = useState<Mode>(readMode)
-  const [theme, setThemeState] = useState<Theme>(readTheme)
+  const [mode, setModeState] = useState<Mode>('original')
+  const [theme, setThemeState] = useState<Theme>('splitflap')
   const [current, setCurrent] = useState<BuzzPhrase | null>(null)
   const [isAnimating, setIsAnimating] = useState(false)
   const [validationError, setValidationError] = useState<string | null>(null)
+
+  useEffect(() => {
+    setModeState(readMode())
+    setThemeState(readTheme())
+  }, [])
 
   function setMode(newMode: Mode) {
     setModeState(newMode)
