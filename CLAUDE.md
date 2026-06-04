@@ -109,21 +109,20 @@ Specs live under `specs/`. The workflow order is:
 Run `/speckit-agent-context-update` after each planning phase to refresh the section below.
 
 <!-- SPECKIT START -->
-Active spec: `specs/004-vercel-deploy/` — Vercel deployment + buzz.waynetellis.com + portfolio WorkshopCard
-Branch: `004-vercel-deploy`
-Plan: `specs/004-vercel-deploy/plan.md`
-Next step: `/speckit-tasks`
+Active spec: none — all specs complete
 
 Completed specs:
 - `specs/001-core-app/` — data layer, state hooks, word matrices, manual input, favourites
 - `specs/002-display-themes/` — Split-Flap, Slot Machine, and Dot-Matrix animated skins
 - `specs/003-editorial-design/` — editorial layer and page design
+- `specs/004-vercel-deploy/` — Vercel deployment, buzz.waynetellis.com, portfolio WorkshopCard
+- `specs/005-delight-layer/` — shareable links, Space keyboard shortcut, easter egg codes
 
 Stable architectural decisions carried forward:
 - `'use client'` boundary at `src/components/BuzzPhraseApp.tsx`; `page.tsx` is a Server Component
 - React Compiler active — no manual `useMemo`/`useCallback`
 - `DisplayProps` interface in `src/types/index.ts` is the shared contract for all skin components
-- `SKIN_MAP[theme]` in `BuzzPhraseApp` dispatches to the active skin component
+- `SKIN_MAP[theme]` in `BuzzPhraseApp` dispatches to the active skin component; `key={mode}` forces remount on mode change so tile arrays reinitialise correctly
 - All localStorage keys: `sbpp-favourites`, `sbpp-mode`, `sbpp-theme`, `sbpp-dotmatrix-colour`
 
 Spec 003 decisions:
@@ -138,4 +137,12 @@ Spec 004 decisions:
 - Custom domain: `buzz.waynetellis.com` via CNAME → `cname.vercel-dns.com`; TLS auto-provisioned
 - No environment variables needed — app is fully client-side
 - WorkshopCard: tracked in this spec's tasks.md; implemented as a separate PR in the portfolio repo
+
+Spec 005 decisions:
+- URL state: `window.history.replaceState` for writes (not `router.replace`); `window.location.search` in `useEffect` for reads — consistent with SSR-safe localStorage pattern
+- URL params override localStorage on load; resolved values are written back to localStorage
+- Keyboard shortcut: `document` `keydown` listener in `BuzzPhraseApp.tsx` `useEffect`; guard against `HTMLInputElement` target
+- Easter eggs: `src/constants/easterEggs.ts`; lookup in `useBuzzword.submitCode`; mount effect also checks easter eggs when loading from URL
+- `isMountedRef` guards T001 (URL sync) from running before T002 (URL read) on mount, preventing premature URL clearing
+- `react-hooks/set-state-in-effect` suppressed with eslint-disable blocks on SSR-safe localStorage/URL hydration effects in `useBuzzword.ts` and `useLocalFavourites.ts`
 <!-- SPECKIT END -->

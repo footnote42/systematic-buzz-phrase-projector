@@ -25,20 +25,20 @@ working correctly in the production environment.
 Original mode, confirm "systemised logistical projection" appears. Save a phrase, reload,
 confirm it persists.
 
-- [ ] T001 [US1] Create Vercel project — import the `systematic-buzz-phrase-projector` GitHub
+- [x] T001 [US1] Create Vercel project — import the `systematic-buzz-phrase-projector` GitHub
   repo via Vercel dashboard (vercel.com/new); verify framework auto-detected as Next.js,
   build command `npm run build`, output directory `.next`
-- [ ] T002 [US1] Confirm no environment variables required — in Vercel project settings →
+- [x] T002 [US1] Confirm no environment variables required — in Vercel project settings →
   Environment Variables; confirm the list is empty (V1 is fully client-side; no secrets needed)
-- [ ] T003 [US1] Trigger first production deploy — in Vercel project settings → Git, confirm
+- [x] T003 [US1] Trigger first production deploy — in Vercel project settings → Git, confirm
   "Automatically deploy from Git" is enabled for the `main` branch (FR-001); push a commit to
   `main` (or use "Redeploy" in Vercel dashboard); confirm build log shows zero TypeScript errors
   and First Load JS ≤ 150 kB in the build output table
-- [ ] T004 [US1] Smoke test on `*.vercel.app` URL — open the deployment URL in incognito
+- [x] T004 [US1] Smoke test on `*.vercel.app` URL — open the deployment URL in incognito
   browser; enter `257` in Original mode → confirm "systemised logistical projection"; switch
   to Modern mode, enter `257` → confirm "generative telemetry alignment"; confirm all three
   display skins animate correctly
-- [ ] T005 [US1] localStorage round-trip — generate a phrase, click the star to save it to
+- [x] T005 [US1] localStorage round-trip — generate a phrase, click the star to save it to
   favourites, hard-reload the page (Ctrl+Shift+R / Cmd+Shift+R), confirm the saved phrase
   still appears in the favourites sidebar
 
@@ -55,19 +55,19 @@ HTTP → HTTPS redirect.
 **Independent Test**: Navigate to `https://buzz.waynetellis.com` in a fresh browser session —
 no cert warning, URL bar shows the custom domain, smoke test phrases pass.
 
-- [ ] T006 [US2] Add custom domain in Vercel — Vercel dashboard → project → Settings →
+- [x] T006 [US2] Add custom domain in Vercel — Vercel dashboard → project → Settings →
   Domains → add `buzz.waynetellis.com`; note the CNAME target Vercel displays (expected:
   `cname.vercel-dns.com`)
-- [ ] T007 [US2] Create DNS CNAME record — in the DNS provider for `waynetellis.com`, add a
+- [x] T007 [US2] Create DNS CNAME record — in the DNS provider for `waynetellis.com`, add a
   CNAME record: Name `buzz`, Value `cname.vercel-dns.com`, TTL 300; wait for Vercel dashboard
   to show the domain status as "Valid Configuration" (typically 2–10 minutes)
-- [ ] T008 [US2] Verify HTTPS certificate — navigate to `https://buzz.waynetellis.com`;
+- [x] T008 [US2] Verify HTTPS certificate — navigate to `https://buzz.waynetellis.com`;
   confirm the page loads with no browser security warning and the URL bar shows the custom
   domain; then navigate to `http://buzz.waynetellis.com` and confirm it redirects to HTTPS
   automatically
-- [ ] T009 [US2] Cross-browser HTTPS check — confirm no certificate warning in Chrome,
+- [x] T009 [US2] Cross-browser HTTPS check — confirm no certificate warning in Chrome,
   Firefox, and Safari (or iOS Safari); confirm the app loads correctly in each
-- [ ] T010 [US2] Repeat smoke tests on custom domain — enter `257` Original → "systemised
+- [x] T010 [US2] Repeat smoke tests on custom domain — enter `257` Original → "systemised
   logistical projection" on `buzz.waynetellis.com`; enter `257` Modern → "generative telemetry
   alignment" on `buzz.waynetellis.com`; confirm favourites localStorage persists
 
@@ -94,10 +94,10 @@ link. Confirm it opens `buzz.waynetellis.com`.
   exactly, add an entry with: name "Systematic Buzz Phrase Projector", description ≤ 2 sentences
   (see `research.md` for draft copy), link `https://buzz.waynetellis.com`, link behaviour
   matching existing portfolio entries
-- [ ] T013 [US3] Test WorkshopCard locally — start the portfolio dev server; verify the new
+- [x] T013 [US3] Test WorkshopCard locally — start the portfolio dev server; verify the new
   entry appears on the workshop page; check at 375px (no overflow, link tappable) and 1280px
   (card fully visible)
-- [ ] T014 [US3] Open and merge portfolio PR — raise PR in the portfolio repo; merge after
+- [x] T014 [US3] Open and merge portfolio PR — raise PR in the portfolio repo; merge after
   approval; verify the live portfolio workshop page shows the new entry and the link opens the
   correct URL
 
@@ -110,10 +110,10 @@ Card readable at 375px.
 
 **Purpose**: Full acceptance sign-off against `quickstart.md` before closing the spec.
 
-- [ ] T015 Lighthouse mobile audit — open Chrome DevTools → Lighthouse → Mobile preset →
+- [x] T015 Lighthouse mobile audit — open Chrome DevTools → Lighthouse → Mobile preset →
   Analyze on `https://buzz.waynetellis.com`; confirm Performance score ≥ 80 and
   Time to Interactive < 3 seconds; confirm zero console errors during page load
-- [ ] T016 Final sign-off per `specs/004-vercel-deploy/quickstart.md` — run through all
+- [x] T016 Final sign-off per `specs/004-vercel-deploy/quickstart.md` — run through all
   Phase 1–4 checklist items; confirm every item passes before raising the spec completion PR
 
 ---

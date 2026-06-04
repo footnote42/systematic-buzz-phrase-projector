@@ -43,9 +43,12 @@ export function useLocalFavourites() {
   const [favourites, setFavourites] = useState<BuzzPhrase[]>([])
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
+  // SSR-safe hydration: server renders empty array; client reads localStorage post-mount
+  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     setFavourites(loadFavourites())
   }, [])
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   function toggleFavourite(phrase: BuzzPhrase) {
     setFavourites((prev) => {

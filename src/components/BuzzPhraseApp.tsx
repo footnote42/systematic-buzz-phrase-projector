@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect } from 'react'
 import { useBuzzword } from '@/hooks/useBuzzword'
 import { useLocalFavourites } from '@/hooks/useLocalFavourites'
 import { useAudio } from '@/hooks/useAudio'
@@ -56,6 +57,18 @@ export default function BuzzPhraseApp() {
 
   const { toggleMute, isMuted } = useAudio()
 
+  // T004 — Space bar generates a new phrase; guard against input fields
+  useEffect(() => {
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key !== ' ') return
+      if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) return
+      event.preventDefault()
+      generate()
+    }
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [generate])
+
   const isFavd = current ? isFavourited(current.id) : false
   const ActiveSkin = SKIN_MAP[theme]
   const columnWords = getColumnWords(mode)
@@ -88,6 +101,7 @@ export default function BuzzPhraseApp() {
 
         <section aria-label="Phrase display" className="min-h-16 flex items-center justify-center">
           <ActiveSkin
+            key={mode}
             words={current?.words ?? ['', '', '']}
             isAnimating={isAnimating}
             onAnimationComplete={handleAnimationComplete}
