@@ -109,12 +109,12 @@ Specs live under `specs/`. The workflow order is:
 Run `/speckit-agent-context-update` after each planning phase to refresh the section below.
 
 <!-- SPECKIT START -->
-Specs 001 (core app) and 002 (display themes) are complete and merged to main.
-No active spec. Run `/speckit-specify <feature description>` to start the next one.
+Active spec: None
 
 Completed specs:
 - `specs/001-core-app/` — data layer, state hooks, word matrices, manual input, favourites
 - `specs/002-display-themes/` — Split-Flap, Slot Machine, and Dot-Matrix animated skins
+- `specs/003-editorial-design/` — editorial layer and page design
 
 Stable architectural decisions carried forward:
 - `'use client'` boundary at `src/components/BuzzPhraseApp.tsx`; `page.tsx` is a Server Component
@@ -122,4 +122,11 @@ Stable architectural decisions carried forward:
 - `DisplayProps` interface in `src/types/index.ts` is the shared contract for all skin components
 - `SKIN_MAP[theme]` in `BuzzPhraseApp` dispatches to the active skin component
 - All localStorage keys: `sbpp-favourites`, `sbpp-mode`, `sbpp-theme`, `sbpp-dotmatrix-colour`
+
+Spec 003 decisions:
+- Headline font: Space Grotesk (next/font/google), CSS var `--font-space-grotesk`
+- Page layout splits into interactive section (above fold) + editorial section (scrollable below)
+- New component: `src/components/EditorialSection.tsx` (static prose, no props)
+- `ManualInput` gains a `hint: string` prop; hint is derived in `BuzzPhraseApp` via `MANUAL_HINT[mode]`
+- Editorial palette: `bg-gray-50` / `text-gray-900` — skin-neutral, WCAG AA compliant
 <!-- SPECKIT END -->
