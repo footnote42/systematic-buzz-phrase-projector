@@ -301,9 +301,10 @@ Lightweight enhancements that extend V1 without requiring accounts or backend:
 | 3 | 002 | Slot Machine skin | Complete |
 | 4 | 002 | Split-Flap skin + Web Audio synthesis | Complete |
 | 5 | 002 | Dot-Matrix typewriter skin | Complete |
-| 6 | 003 | Editorial layer: Broughton copy, author's note, page design & typography polish | Pending |
-| 7 | 004 | Vercel deployment, `buzz.waynetellis.com` domain, portfolio `WorkshopCard` | Pending |
-| 8 | 005 | Delight layer: shareable URLs, keyboard shortcuts, Easter eggs, confetti, Hall of Infamy | Pending |
+| 6 | 003 | Editorial layer: Broughton copy, author's note, page design & typography polish | Complete |
+| 7 | 004 | Vercel deployment, `buzz.waynetellis.com` domain, portfolio `WorkshopCard` | Complete |
+| 8 | 005 | Delight layer: shareable URLs, keyboard shortcuts, Easter eggs | Complete |
+| 9 | — | Polish sprint: skin-responsive design, navigation, display improvements, prose, Obsidian docs | Planned |
 
 ---
 
@@ -370,3 +371,37 @@ near the manual input controls rather than in a separate section.
   (2) editorial context, (3) footer/attribution.
 - Colour palette for the editorial layer is neutral (not skin-themed) so it reads
   correctly regardless of which display skin is active.
+
+---
+
+## 11. Planned Polish — Skin-Responsive Design & Display Improvements
+
+### 11.1 Skin-Responsive Page Aesthetics
+
+The page chrome (background, typography, controls, editorial section) transforms to match the active display skin. Each skin has a distinct character while remaining connected to the portfolio brand voice (Cabinet Grotesk headings, Newsreader body). Implementation uses a `data-skin` attribute on the wrapper and CSS custom property overrides.
+
+| Skin | Theme | Palette | Typography flavour |
+|------|-------|---------|-------------------|
+| Split-Flap | International airport terminal | Deep navy, warm amber/yellow flight-board tones | Condensed all-caps labels, Cabinet Grotesk headings |
+| Slot Machine | Casino / fruit machine | Deep felt-green or burgundy, gold accents | Cabinet Grotesk bold, generous letter-spacing |
+| Dot-Matrix | 80s home computer (C64/BBC Micro) | C64 blue or phosphor-black, phosphor green/cyan accent | VT323 labels, CRT scanlines extended to full page |
+
+### 11.2 Navigation
+
+A "← Workshop" link at the top of the page (outside the main controls area) links back to `https://waynetellis.com/workshop`. Styled minimally — functional, not dominant.
+
+### 11.3 Display Improvements
+
+| Area | Issue | Planned fix |
+|------|-------|-------------|
+| Split-Flap: long phrases | Chaos mode words like "stakeholder-centric" overflow at 375px | Dynamic tile-width scaling based on longest active column word |
+| Split-Flap: audio | 5ms noise burst too short — click feels weak | Extend to 15ms with exponential gain decay for a percussive tail |
+| Slot Machine: cylinder | Flat reel lacks depth | CSS `mask-image` gradient on reel edges for barrel illusion |
+| Slot Machine: audio | Silent on settle | `playSettle()` — two descending sine tones on `transitionend` (ching-ching) |
+| Dot-Matrix: audio | Silent | `playTick()` — short square wave pulse per character reveal |
+| Dot-Matrix: between phrases | Overwrites text in place — no clear reset | Brief blank (150ms) before typewriter begins for each new phrase |
+
+### 11.4 Prose & Build Story
+
+- Existing editorial copy reviewed against natural-prose style guidelines (no AI-vocabulary tells, contractions restored, sentence rhythm varied).
+- Expandable "Story of the Build" section added — collaborative draft: written first from build history, then refined with user input to inject personal voice.
