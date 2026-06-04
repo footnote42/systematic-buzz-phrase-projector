@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Systematic Buzz Phrase Projector
 
-## Getting Started
+A digital homage to Philip Broughton's 1968 satirical management-jargon matrix. Pick a three-digit code or hit Generate — you'll get a grammatically correct, authoritative-sounding phrase that means absolutely nothing.
 
-First, run the development server:
+Live at **[buzz.waynetellis.com](https://buzz.waynetellis.com)**
+
+---
+
+## What it does
+
+Three word matrices, three display skins, one joke that never gets old.
+
+**Modes**
+- *Original (1968)* — Broughton's own 10×10×10 matrix, unchanged
+- *Modern (2026)* — the same structure, restocked with AI/agile/cloud vocabulary
+- *Chaos* — both matrices combined; 8,000 combinations
+
+**Display skins**
+- *Split-Flap* — animated tile flip with Web Audio click synthesis
+- *Slot Machine* — scrolling reels with bounce easing
+- *Dot-Matrix* — typewriter character reveal with CRT scanline overlay
+
+**Other things it does**
+- Manual code entry: type `257` and press Enter to get a specific phrase
+- Shareable URLs: every phrase is encoded in the address bar (`?code=257&mode=original`)
+- Space bar generates a new phrase
+- Save phrases to a local favourites drawer (no account needed)
+- Easter eggs: try `000` in each mode
+
+---
+
+## Running it locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build    # production build + TypeScript check
+npm run lint     # ESLint
+npm test -- --run  # Vitest unit tests
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Stack
 
-To learn more about Next.js, take a look at the following resources:
+Next.js 16 App Router · React 19 · TypeScript · Tailwind CSS 4 · Vitest
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+No backend. All state is client-side (localStorage + URL params).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## Verification
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `257` in Original mode → "systemised logistical projection"
+- `257` in Modern mode → "generative telemetry alignment"
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## Background
+
+Philip Broughton published the original *Systematic Buzz Phrase Projector* in *Time* magazine on 13 May 1968. Frustrated by impenetrable bureaucratic language, he built a satirical matrix: any three-digit number maps to a phrase that sounds authoritative and says nothing.
+
+> *"No-one will have the remotest idea of what you're talking about. But the important thing is that they're not going to admit it."* — Philip Broughton, 1968
+
+The Modern and Chaos modes are Wayne Ellis's additions — the same joke, updated for the era of AI, cloud, and agile frameworks.
