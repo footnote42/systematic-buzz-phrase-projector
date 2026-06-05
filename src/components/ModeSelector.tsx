@@ -21,10 +21,10 @@ export default function ModeSelector({ mode, onModeChange }: ModeSelectorProps) 
           onClick={() => onModeChange(value)}
           aria-pressed={mode === value}
           className={[
-            'px-4 py-2 rounded border font-medium transition-colors',
+            'px-4 py-2 rounded border text-sm font-medium transition-colors',
             mode === value
-              ? 'bg-black text-white border-black'
-              : 'bg-white text-black border-gray-300 hover:border-black',
+              ? 'bg-[var(--color-accent)] text-[var(--color-base)] border-[var(--color-accent)]'
+              : 'bg-transparent text-[var(--color-text-muted)] border-[var(--color-border)] hover:border-[var(--color-accent)] hover:text-[var(--color-text)]',
           ].join(' ')}
         >
           {label}

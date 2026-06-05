@@ -11,6 +11,9 @@ type SplitFlapProps = DisplayProps & {
 
 const TILE_STAGGER_MS = 30
 const FLIP_DURATION_MS = 80
+const BASE_TILE_W = 28
+const BASE_TILE_H = 40
+const BASE_FONT_PX = 18
 
 function padWord(word: string, length: number): string {
   return word.padEnd(length, '-')
@@ -24,6 +27,26 @@ function getMaxLengths(
     Math.max(...columnWords[1].map((w) => w.length), 1),
     Math.max(...columnWords[2].map((w) => w.length), 1),
   ]
+}
+
+function computeTileSize(columnWords: readonly [readonly string[], readonly string[], readonly string[]]): {
+  width: number
+  height: number
+  fontSize: number
+} {
+  const maxLen = Math.max(
+    ...columnWords[0].map((w) => w.length),
+    ...columnWords[1].map((w) => w.length),
+    ...columnWords[2].map((w) => w.length),
+    1,
+  )
+  if (maxLen <= 12) return { width: BASE_TILE_W, height: BASE_TILE_H, fontSize: BASE_FONT_PX }
+  const scale = Math.max(16, Math.round(BASE_TILE_W * 12 / maxLen))
+  return {
+    width: scale,
+    height: Math.round(scale * BASE_TILE_H / BASE_TILE_W),
+    fontSize: Math.round(scale * BASE_FONT_PX / BASE_TILE_W),
+  }
 }
 
 interface TileState {
@@ -54,6 +77,7 @@ export default function SplitFlapDisplay({
   })
 
   const maxLengths = getMaxLengths(columnWords)
+  const tileSize = computeTileSize(columnWords)
 
   const [tiles, setTiles] = useState<TileState[][]>(() => makeBlankTiles(maxLengths))
 
@@ -169,12 +193,12 @@ export default function SplitFlapDisplay({
           {panelTiles.map((tile, ti) => (
             <div
               key={ti}
-              className="relative w-7 h-10 overflow-hidden bg-gray-900 text-white flex flex-col select-none"
-              style={{ perspective: '400px' }}
+              className="relative overflow-hidden bg-gray-900 text-white flex flex-col select-none"
+              style={{ width: tileSize.width, height: tileSize.height, perspective: '400px' }}
             >
               {/* Top half */}
               <div
-                className="absolute top-0 left-0 w-full h-1/2 overflow-hidden flex items-end justify-center bg-gray-800 text-white text-lg font-bold"
+                className="absolute top-0 left-0 w-full h-1/2 overflow-hidden flex items-end justify-center bg-gray-800 text-white font-bold"
                 style={{
                   transformOrigin: 'bottom center',
                   backfaceVisibility: 'hidden',
@@ -184,12 +208,12 @@ export default function SplitFlapDisplay({
                       : undefined,
                 }}
               >
-                <span className="leading-none pb-0.5">{tile.char.toUpperCase()}</span>
+                <span className="leading-none pb-0.5" style={{ fontSize: tileSize.fontSize }}>{tile.char.toUpperCase()}</span>
               </div>
 
               {/* Bottom half */}
               <div
-                className="absolute bottom-0 left-0 w-full h-1/2 overflow-hidden flex items-start justify-center bg-gray-700 text-white text-lg font-bold"
+                className="absolute bottom-0 left-0 w-full h-1/2 overflow-hidden flex items-start justify-center bg-gray-700 text-white font-bold"
                 style={{
                   transformOrigin: 'top center',
                   backfaceVisibility: 'hidden',
@@ -199,7 +223,7 @@ export default function SplitFlapDisplay({
                       : undefined,
                 }}
               >
-                <span className="leading-none pt-0.5">{tile.char.toUpperCase()}</span>
+                <span className="leading-none pt-0.5" style={{ fontSize: tileSize.fontSize }}>{tile.char.toUpperCase()}</span>
               </div>
 
               {/* Divider */}

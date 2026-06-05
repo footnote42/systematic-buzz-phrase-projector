@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react'
 import type { DisplayProps } from '@/types'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
+import { useAudio } from '@/hooks/useAudio'
 
 type SlotMachineProps = DisplayProps & {
   columnWords: readonly [readonly string[], readonly string[], readonly string[]]
@@ -17,6 +18,7 @@ export default function SlotMachineDisplay({
   columnWords,
 }: SlotMachineProps) {
   const reducedMotion = useReducedMotion()
+  const { playSettle } = useAudio()
 
   const reel0Ref = useRef<HTMLDivElement>(null)
   const reel1Ref = useRef<HTMLDivElement>(null)
@@ -25,9 +27,14 @@ export default function SlotMachineDisplay({
   const generationRef = useRef(0)
   const settledRef = useRef(0)
   const onCompleteRef = useRef(onAnimationComplete)
+  const playSettleRef = useRef(playSettle)
 
   useEffect(() => {
     onCompleteRef.current = onAnimationComplete
+  })
+
+  useEffect(() => {
+    playSettleRef.current = playSettle
   })
 
   function getTargetIndex(wi: number): number {
@@ -81,6 +88,7 @@ export default function SlotMachineDisplay({
         if (generationRef.current !== generation) return
         settledRef.current++
         if (settledRef.current >= 3) {
+          playSettleRef.current()
           onCompleteRef.current()
         }
       }
@@ -112,7 +120,12 @@ export default function SlotMachineDisplay({
           <div
             key={wi}
             className="overflow-hidden border-2 border-gray-500 rounded bg-gray-900 text-white"
-            style={{ height: ROW_HEIGHT, minWidth: '10rem' }}
+            style={{
+              height: ROW_HEIGHT,
+              minWidth: '10rem',
+              maskImage: 'linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%)',
+              WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%)',
+            }}
             aria-label={`Word ${wi + 1}`}
           >
             <div ref={reelRef}>

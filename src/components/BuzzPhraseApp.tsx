@@ -74,26 +74,41 @@ export default function BuzzPhraseApp() {
   const columnWords = getColumnWords(mode)
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div
+      data-skin={theme}
+      className="flex flex-col min-h-screen relative bg-[var(--color-base)] text-[var(--color-text)]"
+    >
+      {/* Navigation */}
+      <nav className="w-full px-6 pt-5 pb-2">
+        <div className="max-w-2xl mx-auto">
+          <a
+            href="https://waynetellis.com/workshop"
+            className="text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors tracking-wide"
+          >
+            ← Workshop
+          </a>
+        </div>
+      </nav>
+
       <main className="flex flex-col flex-1 items-center justify-center p-8 gap-8 max-w-2xl mx-auto w-full">
         <div className="text-center w-full flex flex-col items-center gap-2">
-          <h1 className="text-3xl md:text-4xl font-semibold font-[family-name:var(--font-space-grotesk)] tracking-tight">
+          <h1 className="text-3xl md:text-4xl font-bold font-[family-name:var(--font-cabinet-grotesk)] tracking-tight text-[var(--color-text)]">
             Systematic Buzz Phrase Projector
           </h1>
-          <p className="text-sm text-gray-500 max-w-md">
+          <p className="text-sm text-[var(--color-text-muted)] max-w-md">
             {"A digital homage to Philip Broughton's 1968 management-jargon matrix."}
           </p>
         </div>
 
         <ModeSelector mode={mode} onModeChange={setMode} />
-        
+
         <div className="flex items-center gap-4">
           <ThemeSelector theme={theme} onThemeChange={setTheme} />
           <button
             type="button"
             onClick={toggleMute}
             aria-label={isMuted ? 'Unmute sound' : 'Mute sound'}
-            className="text-sm text-gray-500 hover:text-black transition-colors"
+            className="text-sm text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"
           >
             {isMuted ? '🔇' : '🔊'}
           </button>
@@ -126,7 +141,7 @@ export default function BuzzPhraseApp() {
             disabled={!current}
             aria-label={isFavd ? 'Remove from favourites' : 'Save to favourites'}
             aria-pressed={isFavd}
-            className="text-2xl disabled:opacity-30 transition-opacity"
+            className="text-2xl disabled:opacity-30 transition-opacity text-[var(--color-accent)]"
           >
             {isFavd ? '★' : '☆'}
           </button>
@@ -134,7 +149,7 @@ export default function BuzzPhraseApp() {
           <button
             type="button"
             onClick={() => setSidebarOpen(true)}
-            className="text-sm font-medium hover:underline"
+            className="text-sm font-medium text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors"
           >
             Saved ★ {favourites.length}
           </button>

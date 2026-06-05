@@ -3,10 +3,12 @@
 import { useEffect, useRef, useState } from 'react'
 import type { DisplayProps, ColourVariant } from '@/types'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
+import { useAudio } from '@/hooks/useAudio'
 
 const COLOUR_KEY = 'sbpp-dotmatrix-colour'
 const CHAR_DELAY_MS = 40
 const SPACE_EXTRA_MS = 160
+const BLANK_PAUSE_MS = 150
 
 function readColourVariant(): ColourVariant {
   if (typeof window === 'undefined') return 'green'
@@ -16,13 +18,19 @@ function readColourVariant(): ColourVariant {
 
 export default function DotMatrixDisplay({ words, isAnimating, onAnimationComplete }: DisplayProps) {
   const reducedMotion = useReducedMotion()
+  const { playTick } = useAudio()
   const [displayedText, setDisplayedText] = useState('')
   const [colourVariant, setColourVariant] = useState<ColourVariant>(readColourVariant)
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const onCompleteRef = useRef(onAnimationComplete)
+  const playTickRef = useRef(playTick)
 
   useEffect(() => {
     onCompleteRef.current = onAnimationComplete
+  })
+
+  useEffect(() => {
+    playTickRef.current = playTick
   })
 
   const phraseString = words.filter(Boolean).join(' ')
@@ -65,6 +73,7 @@ export default function DotMatrixDisplay({ words, isAnimating, onAnimationComple
       return
     }
 
+    // Blank immediately, then pause 150 ms before typing begins
     setDisplayedText('')
 
     let charIndex = 0
@@ -72,7 +81,7 @@ export default function DotMatrixDisplay({ words, isAnimating, onAnimationComple
     function revealNext() {
       const char = phraseString[charIndex]
       charIndex++
-
+      playTickRef.current()
       setDisplayedText(phraseString.slice(0, charIndex))
 
       if (charIndex >= phraseString.length) {
@@ -84,7 +93,7 @@ export default function DotMatrixDisplay({ words, isAnimating, onAnimationComple
       timeoutRef.current = setTimeout(revealNext, delay)
     }
 
-    timeoutRef.current = setTimeout(revealNext, CHAR_DELAY_MS)
+    timeoutRef.current = setTimeout(revealNext, BLANK_PAUSE_MS)
 
     return () => {
       cancelTypewriter()
@@ -108,7 +117,7 @@ export default function DotMatrixDisplay({ words, isAnimating, onAnimationComple
         aria-live="polite"
         className={`relative w-full min-h-12 bg-gray-950 rounded p-4 font-[family-name:var(--font-vt323)] text-2xl tracking-widest overflow-hidden ${phosphorClass}`}
       >
-        {/* CRT scanline overlay */}
+        {/* CRT scanline overlay (display-local) */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{

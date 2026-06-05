@@ -23,10 +23,10 @@ export default function ManualInput({ onSubmit, validationError, disabled, hint 
 
   return (
     <div className="flex flex-col gap-1">
-      <label htmlFor="manual-code" className="text-sm font-medium">
+      <label htmlFor="manual-code" className="text-sm font-medium text-[var(--color-text)]">
         Enter 3-digit code
       </label>
-      <p className="text-xs text-gray-500 max-w-[7rem]">{hint}</p>
+      <p className="text-xs text-[var(--color-text-muted)] max-w-[7rem]">{hint}</p>
       <input
         id="manual-code"
         type="text"
@@ -34,11 +34,11 @@ export default function ManualInput({ onSubmit, validationError, disabled, hint 
         disabled={disabled}
         onKeyDown={handleKeyDown}
         placeholder="e.g. 257"
-        className="border rounded px-3 py-2 w-28 text-center text-lg tracking-widest disabled:opacity-50"
+        className="border rounded px-3 py-2 w-28 text-center text-lg tracking-widest disabled:opacity-50 bg-[var(--color-surface)] text-[var(--color-text)] border-[var(--color-border)] placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-accent)] transition-colors"
         aria-describedby={validationError ? 'manual-code-error' : undefined}
       />
       {validationError && (
-        <p id="manual-code-error" role="alert" className="text-red-600 text-sm">
+        <p id="manual-code-error" role="alert" className="text-red-400 text-sm">
           {validationError}
         </p>
       )}

@@ -20,8 +20,8 @@ export default function ThemeSelector({ theme, onThemeChange }: ThemeSelectorPro
           className={[
             'px-3 py-1.5 rounded border text-sm font-medium transition-colors',
             theme === value
-              ? 'bg-black text-white border-black'
-              : 'bg-white text-black border-gray-300 hover:border-black',
+              ? 'bg-[var(--color-accent)] text-[var(--color-base)] border-[var(--color-accent)]'
+              : 'bg-transparent text-[var(--color-text-muted)] border-[var(--color-border)] hover:border-[var(--color-accent)] hover:text-[var(--color-text)]',
           ].join(' ')}
         >
           {THEME_LABELS[value]}
