@@ -80,8 +80,8 @@ export default function SlotMachineDisplay({
       // Force reflow so the browser applies the snap before adding transition
       reel.getBoundingClientRect()
 
-      // Apply transition and scroll to target with bounce easing
-      reel.style.transition = 'transform 600ms cubic-bezier(0.34, 1.56, 0.64, 1)'
+      // Apply transition and scroll to target with exponential deceleration
+      reel.style.transition = 'transform 600ms cubic-bezier(0.16, 1, 0.3, 1)'
       reel.style.transform = `translateY(-${newIndices[wi] * ROW_HEIGHT}px)`
 
       const handleEnd = () => {

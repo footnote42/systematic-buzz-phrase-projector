@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { VT323, Newsreader } from 'next/font/google'
+import { VT323, Spectral } from 'next/font/google'
 import './globals.css'
 
 const vt323 = VT323({
@@ -9,12 +9,12 @@ const vt323 = VT323({
   variable: '--font-vt323',
 })
 
-const newsreader = Newsreader({
+const spectral = Spectral({
   weight: ['400', '500', '600'],
   style: ['normal', 'italic'],
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-newsreader',
+  variable: '--font-spectral',
 })
 
 export const metadata: Metadata = {
@@ -28,7 +28,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`h-full ${vt323.variable} ${newsreader.variable}`}>
+    <html lang="en" className={`h-full ${vt323.variable} ${spectral.variable}`}>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   )

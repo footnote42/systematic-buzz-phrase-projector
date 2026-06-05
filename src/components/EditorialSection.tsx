@@ -9,43 +9,47 @@ export default function EditorialSection() {
       }}
     >
       <div
-        className="max-w-2xl mx-auto space-y-6 leading-relaxed text-sm"
-        style={{ fontFamily: 'var(--font-newsreader), Georgia, serif' }}
+        className="max-w-2xl mx-auto"
+        style={{ fontFamily: 'var(--font-spectral), Georgia, serif' }}
       >
         <h2
-          className="text-xl font-bold"
+          className="text-xl font-bold mb-6"
           style={{ fontFamily: 'var(--font-cabinet-grotesk), system-ui, sans-serif' }}
         >
           About the Projector
         </h2>
 
-        <p>
+        <p className="leading-relaxed text-sm mb-5">
           Philip Broughton was a program analyst at the U.S. Public Health Service. In May 1968
           he published his <em>Systematic Buzz Phrase Projector</em> in <em>Time</em> magazine —
           a 10×10×10 matrix of management vocabulary where any three-digit number produces a
           grammatically correct, authoritative-sounding phrase that means absolutely nothing.
         </p>
 
-        <blockquote
-          className="border-l-4 pl-4 italic my-4"
-          style={{ borderColor: 'var(--color-accent)', color: 'var(--color-text-muted)' }}
-        >
-          {'"No-one will have the remotest idea of what you\'re talking about. But the important thing is that they\'re not going to admit it."'}
+        <blockquote className="relative pl-10 py-1 my-8 italic text-sm leading-relaxed">
           <span
-            className="block text-xs font-semibold mt-1 not-italic"
+            className="absolute left-0 -top-3 text-7xl leading-none select-none not-italic"
+            aria-hidden="true"
+            style={{ color: 'var(--color-accent)', opacity: 0.4, fontFamily: 'Georgia, serif' }}
+          >
+            &ldquo;
+          </span>
+          No-one will have the remotest idea of what you&rsquo;re talking about. But the
+          important thing is that they&rsquo;re not going to admit it.
+          <span
+            className="block text-xs font-semibold mt-2 not-italic"
             style={{ fontFamily: 'var(--font-cabinet-grotesk), system-ui, sans-serif' }}
           >
             — Philip Broughton, 1968
           </span>
         </blockquote>
 
-        <p>
+        <p className="leading-relaxed text-sm mb-8">
           The original 1968 matrix is still precise. I&rsquo;ve added two new modes for the
           current vocabulary: Modern 2026 draws from AI, cloud architecture, and agile ceremonies;
           Chaos throws both matrices together and lets the collisions speak for themselves.
         </p>
 
-        {/* Expandable build story */}
         <details className="group">
           <summary
             className="cursor-pointer text-sm font-semibold select-none list-none flex items-center gap-2 hover:opacity-80 transition-opacity"
@@ -58,7 +62,7 @@ export default function EditorialSection() {
             Story of the Build
           </summary>
 
-          <div className="mt-4 space-y-4 pl-4 border-l" style={{ borderColor: 'var(--color-border)' }}>
+          <div className="mt-4 space-y-4 pl-4 border-l text-sm leading-relaxed" style={{ borderColor: 'var(--color-border)' }}>
             <p>
               This started as a single-evening idea that turned into three sessions. I didn&rsquo;t
               plan for that. I jumped in with momentum but not much forethought — which meant I
@@ -98,7 +102,7 @@ export default function EditorialSection() {
         </details>
 
         <p
-          className="text-xs mt-8 pt-4 border-t"
+          className="text-xs mt-10 pt-4 border-t"
           style={{ color: 'var(--color-text-muted)', borderColor: 'var(--color-border)' }}
         >
           Original concept by Philip Broughton, published in <em>Time</em> magazine, 1968.
