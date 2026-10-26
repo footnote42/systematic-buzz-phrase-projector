@@ -2,8 +2,9 @@ import { describe, it, expect } from 'vitest'
 import { EASTER_EGGS } from '@/constants/easterEggs'
 import { resolvePhrase } from '@/utils/phraseResolver'
 import { ORIGINAL_MATRIX, MODERN_MATRIX, CHAOS_MATRIX } from '@/constants/buzzwords'
+import type { WordMatrix } from '@/types'
 
-const MATRIX_FOR: Record<string, typeof ORIGINAL_MATRIX> = {
+const MATRIX_FOR: Record<string, WordMatrix> = {
   original: ORIGINAL_MATRIX,
   modern: MODERN_MATRIX,
   chaos: CHAOS_MATRIX,
